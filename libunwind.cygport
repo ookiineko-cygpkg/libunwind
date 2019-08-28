@@ -1,0 +1,58 @@
+CYGCMAKE_GENERATOR="Ninja"
+inherit clang cmake
+
+NAME="libunwind"
+VERSION=8.0.1
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="Exception handling library for Clang"
+DESCRIPTION="Clang is an LLVM native C/C++/ObjC compiler, which aims to deliver
+amazingly fast compiles, extremely useful error and warning messages and to
+provide a platform for building great source level tools. The Clang Static
+Analyzer is a tool that automatically finds bugs in your code, and is a great
+example of the sort of tool that can be built using the Clang frontend as a
+library to parse C/C++ code."
+HOMEPAGE="http://clang.llvm.org/"
+SRC_URI="https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/${NAME}-${VERSION}.src.tar.xz"
+SRC_DIR="libunwind-${VERSION}.src"
+PATCH_URI="
+	8.0.1-cygming-install.patch
+	8.0.1-cygwin-nodefaultlibs.patch
+	8.0.1-cygwin-registers.patch
+	8.0.1-cygwin-seh.patch
+"
+
+PKG_NAMES="libunwind1 libunwind-devel"
+libunwind1_CONTENTS="usr/bin/cygunwind-1.dll usr/share/doc/${NAME}"
+libunwind_devel_CONTENTS="usr/include/*.h usr/lib/libunwind*"
+
+#DIFF_EXCLUDES="bad_symlink"
+
+src_compile() {
+#	LDFLAGS+=" -Wl,--export-all-symbols"
+
+	mkdir -p ${B}/shared
+	cd ${B}/shared
+	cygcmake \
+		 -DLIBUNWIND_ENABLE_SHARED=ON \
+		 -DLIBUNWIND_ENABLE_STATIC=OFF \
+		 -DLIBUNWIND_USE_COMPILER_RT=ON
+	cygninja
+	mkdir -p ${B}/static
+	cd ${B}/static
+	cygcmake \
+		 -DLIBUNWIND_ENABLE_SHARED=OFF \
+		 -DLIBUNWIND_ENABLE_STATIC=ON \
+		 -DLIBUNWIND_USE_COMPILER_RT=ON
+	cygninja
+}
+
+src_install() {
+	cd ${B}/static
+	ninja_install
+	cd ${B}/shared
+	ninja_install
+
+	doinclude ${S}/include/unwind.h ${S}/include/__libunwind_config.h
+	dodoc ${S}/*.TXT
+}
