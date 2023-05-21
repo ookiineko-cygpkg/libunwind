@@ -21,6 +21,7 @@ PATCH_URI="
 	9.0.1-cygwin-registers.patch
 	8.0.1-cygwin-seh.patch
 "
+RESTRICT="debuginfo"
 
 PKG_NAMES="libunwind1 libunwind-devel"
 libunwind1_CONTENTS="usr/bin/cygunwind-1.dll usr/share/doc/${NAME}"
