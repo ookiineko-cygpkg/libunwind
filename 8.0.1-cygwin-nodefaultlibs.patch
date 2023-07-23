@@ -19,13 +19,13 @@
    if (MINGW)
      # Mingw64 requires quite a few "C" runtime libraries in order for basic
      # programs to link successfully with -nodefaultlibs.
---- origsrc/libunwind-8.0.1.src/src/CMakeLists.txt	2018-12-11 10:30:04.000000000 -0500
-+++ src/libunwind-8.0.1.src/src/CMakeLists.txt	2019-07-22 09:21:24.375563300 -0400
-@@ -70,6 +70,7 @@ unwind_append_if(LIBUNWIND_CXX_FLAGS LIB
- unwind_append_if(LIBUNWIND_LINK_FLAGS LIBUNWIND_HAS_NODEFAULTLIBS_FLAG -nodefaultlibs)
- 
+--- origsrc/libunwind-10.0.1.src/src/CMakeLists.txt	2023-07-23 20:04:27.429818300 +0800
++++ src/libunwind-10.0.1.src/src/CMakeLists.txt	2023-07-23 20:07:57.976549100 +0800
+@@ -78,6 +78,7 @@
+ add_link_flags_if_supported(-nodefaultlibs)
+
  # MINGW_LIBRARIES is defined in config-ix.cmake
-+unwind_append_if(libraries CYGWIN "${CYGWIN_LIBRARIES}")
- unwind_append_if(libraries MINGW "${MINGW_LIBRARIES}")
- 
- if (LIBUNWIND_HAS_NO_EXCEPTIONS_FLAG AND LIBUNWIND_HAS_FUNWIND_TABLES)
++add_library_flags_if(CYGWIN "${CYGWIN_LIBRARIES}")
+ add_library_flags_if(MINGW "${MINGW_LIBRARIES}")
+
+ if (LIBUNWIND_ENABLE_SHARED AND
