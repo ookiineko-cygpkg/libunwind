@@ -37,14 +37,16 @@ src_compile() {
 	cygcmake \
 		 -DLIBUNWIND_ENABLE_SHARED=ON \
 		 -DLIBUNWIND_ENABLE_STATIC=OFF \
-		 -DLIBUNWIND_USE_COMPILER_RT=ON
+		 -DLIBUNWIND_USE_COMPILER_RT=ON \
+		 -DLLVM_CONFIG_PATH=/usr/bin/llvm-config
 	cygninja
 	mkdir -p ${B}/static
 	cd ${B}/static
 	cygcmake \
 		 -DLIBUNWIND_ENABLE_SHARED=OFF \
 		 -DLIBUNWIND_ENABLE_STATIC=ON \
-		 -DLIBUNWIND_USE_COMPILER_RT=ON
+		 -DLIBUNWIND_USE_COMPILER_RT=ON \
+		 -DLLVM_CONFIG_PATH=/usr/bin/llvm-config
 	cygninja
 }
 
