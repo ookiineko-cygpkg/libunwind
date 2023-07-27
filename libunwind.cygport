@@ -2,7 +2,7 @@ CYGCMAKE_GENERATOR="Ninja"
 inherit clang cmake
 
 NAME="libunwind"
-VERSION=11.0.0
+VERSION=12.0.1
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Exception handling library for Clang"
@@ -20,6 +20,8 @@ PATCH_URI="
 	8.0.1-cygwin-nodefaultlibs.patch
 	9.0.1-cygwin-registers.patch
 	8.0.1-cygwin-seh.patch
+	12.0.1-out-of-tree-build.patch
+	12.0.1-unwindcursor-alignment.patch
 "
 RESTRICT="debuginfo"
 

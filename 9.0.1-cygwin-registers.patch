@@ -44,15 +44,6 @@
  #else
 --- origsrc/libunwind-9.0.1.src/src/UnwindRegistersRestore.S	2019-12-11 14:15:30.000000000 -0500
 +++ src/libunwind-9.0.1.src/src/UnwindRegistersRestore.S	2020-05-03 17:40:37.645944900 -0400
-@@ -17,7 +17,7 @@ DEFINE_LIBUNWIND_FUNCTION(_ZN9libunwind1
- #
- # void libunwind::Registers_x86::jumpto()
- #
--#if defined(_WIN32)
-+#if defined(_WIN32) || defined(__CYGWIN__)
- # On windows, the 'this' pointer is passed in ecx instead of on the stack
-   movl   %ecx, %eax
- #else
 @@ -64,7 +64,7 @@ DEFINE_LIBUNWIND_FUNCTION(_ZN9libunwind1
  #
  # void libunwind::Registers_x86_64::jumpto()

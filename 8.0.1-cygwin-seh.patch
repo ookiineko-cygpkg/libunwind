@@ -36,15 +36,6 @@
  // This is the common wrapper for GCC-style personality functions with SEH.
 --- origsrc/libunwind-8.0.1.src/src/AddressSpace.hpp	2019-02-06 05:22:11.000000000 -0500
 +++ src/libunwind-8.0.1.src/src/AddressSpace.hpp	2019-07-22 09:14:25.166164300 -0400
-@@ -137,7 +137,7 @@ extern char __exidx_end;
- // independent ELF header traversal is not provided by <link.h> on some
- // systems (e.g., FreeBSD). On these systems the data structures are
- // just called Elf_XXX. Define ElfW() locally.
--#ifndef _WIN32
-+#if !defined _WIN32 && !defined __CYGWIN__
- #include <link.h>
- #else
- #include <windows.h>
 @@ -419,7 +419,7 @@ inline bool LocalAddressSpace::findUnwin
                               (void *)info.arm_section, (void *)info.arm_section_length);
    if (info.arm_section && info.arm_section_length)
