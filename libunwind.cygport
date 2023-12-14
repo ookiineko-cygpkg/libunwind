@@ -1,6 +1,8 @@
 CYGCMAKE_GENERATOR="Ninja"
 inherit clang cmake
 
+BUILD_REQUIRES=" compiler-rt"
+
 NAME="libunwind"
 VERSION=13.0.1
 RELEASE=1
@@ -26,6 +28,7 @@ RESTRICT="debuginfo"
 
 PKG_NAMES="libunwind1 libunwind-devel"
 libunwind1_CONTENTS="usr/bin/cygunwind-1.dll usr/share/doc/${NAME}"
+libunwind1_REQUIRES="compiler-rt"
 libunwind_devel_CONTENTS="usr/include/*.h usr/lib/libunwind*"
 
 #DIFF_EXCLUDES="bad_symlink"
