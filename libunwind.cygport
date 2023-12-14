@@ -4,7 +4,7 @@ inherit clang cmake
 BUILD_REQUIRES=" compiler-rt"
 
 NAME="libunwind"
-VERSION=13.0.1
+VERSION=14.0.5
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Exception handling library for Clang"
@@ -24,7 +24,7 @@ PATCH_URI="
 	12.0.1-out-of-tree-build.patch
 	12.0.1-unwindcursor-alignment.patch
 "
-RESTRICT="debuginfo"
+RESTRICT="debuginfo strip"
 
 PKG_NAMES="libunwind1 libunwind-devel"
 libunwind1_CONTENTS="usr/bin/cygunwind-1.dll usr/share/doc/${NAME}"
