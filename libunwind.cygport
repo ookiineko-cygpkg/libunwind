@@ -4,7 +4,7 @@ inherit clang cmake
 BUILD_REQUIRES=" compiler-rt"
 
 NAME="libunwind"
-VERSION=14.0.5
+VERSION=15.0.7
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Exception handling library for Clang"
@@ -15,13 +15,16 @@ Analyzer is a tool that automatically finds bugs in your code, and is a great
 example of the sort of tool that can be built using the Clang frontend as a
 library to parse C/C++ code."
 HOMEPAGE="http://clang.llvm.org/"
-SRC_URI="https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/libunwind-${VERSION}.src.tar.xz"
+SRC_URI="
+  https://github.com/llvm/llvm-project/releases/download/llvmorg-${PV}/${P}.src.tar.xz
+  https://github.com/llvm/llvm-project/releases/download/llvmorg-${PV}/cmake-${PV}.src.tar.xz
+"
 SRC_DIR="libunwind-${VERSION}.src"
 PATCH_URI="
+	https://src.fedoraproject.org/rpms/llvm-${PN}/raw/f37/f/standalone.patch
 	8.0.1-cygwin-nodefaultlibs.patch
 	9.0.1-cygwin-registers.patch
 	8.0.1-cygwin-seh.patch
-	12.0.1-out-of-tree-build.patch
 	12.0.1-unwindcursor-alignment.patch
 "
 RESTRICT="debuginfo strip"
@@ -32,6 +35,11 @@ libunwind1_REQUIRES="compiler-rt"
 libunwind_devel_CONTENTS="usr/include/*.h usr/lib/libunwind*"
 
 #DIFF_EXCLUDES="bad_symlink"
+
+CYGPORT_USE_UNSTABLE_API=1
+src_unpack_hook() {
+    mv ../cmake{-${PV}.src,}
+}
 
 src_compile() {
 #	LDFLAGS+=" -Wl,--export-all-symbols"
